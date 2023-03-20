@@ -1,57 +1,89 @@
 //HW2
 //code by sepehr noroozi
 #include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
-enum BookType {SCIENTIFIC , CRIME , FANTASY , HORROR , CLASSICS};	//defines the book types
+int publisherId = 1;
+int bookId = 1;
+int libraryId =1;
+
+enum BookType 
+{ 
+	SCIENTIFIC , 
+	CRIME , 
+	FANTASY , 
+	HORROR , 
+	CLASSICS };	//defines the book types
 
 class Publisher 
 {	//static fields
-	public:
+	private:
 		int id;	//publishers id to find it easier
 		string name; //publishers name
-		string location; //publishers location
+		string location; //publishers address
 	//constructor
-	Publisher(string name, string location)
-{
-	//TODO
-	for ()
-}
+	public:
+		Publisher(string name, string location)
+		{	
+			this->id =publisheId++;
+			this->name = name;
+			this->location = location;
+		}
+		void pubSetter(string name , string location)
+		{
+			this->name = name;
+			this->location = location;
+		}
+		void pubShowInfo()
+		{
+			cout << this->name << " " << this->location ;
+		}
 };
 
 class Book
-{	public:
+{	private:
 		int id;
-		string name;
+		string name ;
 		BookType type;
-		Publisher publisher;
+		Publisher publisher ;
 		bool borrowed;
+	public:
 	Book(string name, Publisher publisher, BookType type)
+		{
+		this->name = name; 
+		this->id = bookId++;
+		this->publisher = publisher;
+		this->type = type;
+		}
+	void showInfo()
 	{
-	//TODO
-	}
-	showInfo()
-	{
-		
+		cout << id << ". " << name << endl;
 	}
 };
 
 class Member()
 {
+	private:
+		string id; //identification id
+		string name; 
+		vector<Book> books; //borrowed books
+		
 	public:
-		string id;
-		string name;
-		vector<Book> books;
-	Member(string id, string name)
-	{
-    //TODO
-	}
+		Member(string id, string name)
+		{
+    	//TODO
+    	this->id = id;
+    	this->name =name;
+    	//what should i do with vector?
+		}
 };
 
 class Library()
 {
-	public:
-		int id;
+	private:
+		int id = libraryId++;
 		string name;
 		vector<Book> books;
 		int position;
@@ -59,8 +91,9 @@ class Library()
 	{
     //TODO
 	}
-	void searchBooks()
+	void searchBookByName()
 	{
+		
 	//TODO
 	}
 	void returnAvailableBooks()
@@ -94,7 +127,7 @@ class LibrarieHandler()
 	}
 	void addMember(string name, string id)
 	{
-  // TODO
+    // TODO
 	}
 	vector<Book> getAllBooks(int libId)
 	{
@@ -134,3 +167,7 @@ class LibrarieHandler()
 	}
 };
 
+int main()
+{
+	return 0;
+}
