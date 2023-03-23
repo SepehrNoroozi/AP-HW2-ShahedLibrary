@@ -27,7 +27,7 @@ class Publisher
 	public:
 		Publisher(string name, string location)
 		{	
-			this->id =publisheId++;
+			this->id =publisherId++;
 			this->name = name;
 			this->location = location;
 		}
@@ -61,6 +61,18 @@ class Book
 	{
 		cout << id << ". " << name << endl;
 	}
+	string showType()
+	{
+		return type;
+	}
+	void setBookName(string name )
+	{
+		this->name = name;
+	}
+	string getBookName()
+	{
+		return name;	
+	}
 };
 
 class Member()
@@ -76,62 +88,122 @@ class Member()
     	//TODO
     	this->id = id;
     	this->name =name;
+    	books.max_size(5)
     	//what should i do with vector?
+		}
+		string returnId()
+		{
+			return id;
 		}
 };
 
 class Library()
 {
 	private:
-		int id = libraryId++;
+		int id ;
 		string name;
 		vector<Book> books;
 		int position;
 	Library(string name, int position)
 	{
-    //TODO
+	this->id = libraryId++;
+    this->name = name;
+    this->position = position;
 	}
 	void searchBookByName()
 	{
+		cout << "enter the name of book: ";
+		cin >> string bookName ;
+		if (bookName == name) cout << getBookName();
 		
-	//TODO
 	}
 	void returnAvailableBooks()
 	{
-	//TODO
+		cout << "Available books are as follows: \n" << books[] << endl;
 	}
-	viud addBook()
+	void addBook(int id, string name, BookType type, Publisher publisher)
 	{
-	//TODO
+		Book newBook(id , name, type, publisher)
+		books.push_back(bookInfo);
 	}
 	void returnBookByType()
 	{
-	//TODO
+	vector<Book> booksByType(booksByType type )
+	{
+		vector<Book> books;
+		for(int i=0 ; i<this->books ; i++)
+		{
+			if(this->books[i].showType()==type)
+			{
+				books.push_back(this->books[i]);
+			}
+		}
 	}
+		}
+	string returnName()
+	{
+		return name;
+	}
+	int returnPosition()
+	{
+		return position;
+	}
+	void addBook(Book book)
+	{
+		books.push_back(book)
+	}
+	
 	//if needed should define more methods
 };
 
-class LibrarieHandler()
+class LibrariesHandler()
 {
+	private:
+		vector<Book> books;
+		vector<Member> members;
+		vector<library> libraries;
+	public:
 	void createLibrary(string name, int position)
 	{
-    //TODO
+		Library library(name , position);
+    	bool isSameName = false;
+    	bool isSamePose = false;
+    	for (int i =0 ;i< libraries.size();i++ )
+    	{
+    		if (name == libraries[i].returnName()) isSameName=true;
+    		if (position == libraries[i].returnPosition()) isSamePose=true;
+		}
+		if (isSameName) throw "A library with this name already exists";
+		else if (isSamePose) throw "There is now a library in this place";
+		else libraries.push_back(library);
 	}
 	void addBook(int libId, string name, Publisher publisher, BookType type)
 	{
-    //TODO
+    	Book book(name , publisher , type);
+    	libraries[libId].addbook(book);
 	}
 	void addBook(int libId, Book book)
 	{
-    //TODO
+    	libraries[libId].addbook(book);
 	}
 	void addMember(string name, string id)
 	{
     // TODO
+		Member member(name , id);
+    	bool isSameId = false;
+    	Member member(name , id);
+    	for (int i=0 ; i < members.size(); i++)
+    	{
+    		if (id == members[i].returnId()) isSameId = true;
+		}
+		if (isSameId) throw "there is member with mutual id!";
+		else members.push_back(member);
+
 	}
 	vector<Book> getAllBooks(int libId)
 	{
     // TODO
+		for (int i = 0;)
 	}
 	string getAllBooksInfo(int libId)
 	{
