@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+
 using namespace std;
 
 int publisherId = 1;
@@ -61,7 +62,7 @@ class Book
 	{
 		cout << id << ". " << name << endl;
 	}
-	string showType()
+	string returnType()
 	{
 		return type;
 	}
@@ -73,6 +74,18 @@ class Book
 	{
 		return name;	
 	}
+	int returnBookId()
+	{
+		return id;
+	}
+	string returnBookPublisher()
+	{
+		return publisher;
+	}
+	bool returnIsBorrowed()
+	{
+		return borrowed;
+	}
 };
 
 class Member()
@@ -80,7 +93,7 @@ class Member()
 	private:
 		string id; //identification id
 		string name; 
-		vector<Book> books; //borrowed books
+		vector<Book> borrowedBooks; 
 		
 	public:
 		Member(string id, string name)
@@ -95,6 +108,7 @@ class Member()
 		{
 			return id;
 		}
+		
 };
 
 class Library()
@@ -152,16 +166,19 @@ class Library()
 	{
 		books.push_back(book)
 	}
-	
-	//if needed should define more methods
-};
+	string returnLibID()
+	{
+		return id;
+	}
+	//define more methods if needed
+	};
 
 class LibrariesHandler()
 {
 	private:
 		vector<Book> books;
 		vector<Member> members;
-		vector<library> libraries;
+		vector<Library> libraries;
 	public:
 	void createLibrary(string name, int position)
 	{
@@ -188,7 +205,6 @@ class LibrariesHandler()
 	}
 	void addMember(string name, string id)
 	{
-    // TODO
 		Member member(name , id);
     	bool isSameId = false;
     	Member member(name , id);
@@ -202,24 +218,54 @@ class LibrariesHandler()
 	}
 	vector<Book> getAllBooks(int libId)
 	{
-    // TODO
-		for (int i = 0;)
+		for (int i = 0 ; i < library.size() ; i++)
+		{
+			cout << books << endl;
+		}
 	}
 	string getAllBooksInfo(int libId)
 	{
-    // TODO
+		bool libExist = false;
+		for (int i = 0 ; i < library.size() ; i++)
+		{
+			int x = 1
+			if (libId == library.returnLibId()) libExist = true;
+			else throw "no library with that id exists!"
+			if (libExist) cout << x << "." << library[i] << endl;
+			x++;
+		}
 	}
 	vector<Book> filterByType(int libId, BookType type)
 	{
-    // TODO
+    	Book book(id, name, type, publisher, borrowed)
+    	bool isThatType = false;
+    	for (i = 0 ; i < library.size() ; i++)
+    	{
+    		if ( books.returnType() == type) isThatType =true;
+    		if (isThatType) cout << books[i] << endl;
+    		else throw "[]";
+		}
+		
 	}
 	string filterByTypeAndShowInfo(int libId, BookType type)
 	{
-    // TODO
+    	Book book(id, name, type, publisher, borrowed)
+    	bool isThatType = false;
+    	for (i = 0 ; i < library.size() ; i++)
+    	{
+    		int x = 1;
+    		if ( books.returnType() == type) isThatType =true;
+    		if (isThatType) 
+    		{
+    			cout << x <<books[i].getBookName() << endl;
+			}
+			else throw " " ;
+		}
 	}
 	bool borrow(string memberId, int libraryId, string name)
 	{
     //TODO
+    	
 	}
 	bool returnBook(string memberId, int libraryId, string name)
 	{
