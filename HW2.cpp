@@ -387,9 +387,9 @@ string findLibrariesHaveBook(string name, int position)
     						}
 					}
 			}
-	};
+	}
 
 int main()
-{
-	return 0;
-}
+	{
+		return 0;
+	}
