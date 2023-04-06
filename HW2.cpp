@@ -322,14 +322,13 @@ class LibrariesHandler
 				}
 Library findNearestLibraryByPosition(string name, int position)
 	{
-    	// TODO
    		int userPose , maxPose = 100000;
    		Library nearestLib;
    		bool nearLibChanges = false;
    		string newEntryBook;
 		       	
     	cout << "enter your position: " ; 
-   		cin >> position ; 
+   		cin >> userPose ; 
  	 	cout << "enter book name: ";
    		cin >> newEntryBook;
     	for (int i = 0 ; i < libraries.size() ; i++)
@@ -367,9 +366,28 @@ Library findNearestLibraryByPosition(string name, int position)
 string findLibrariesHaveBook(string name, int position)
 	{
     	//TODO
-    	
-	}
-};
+    	int userPose ,  distance;
+   		Library nearestLib;
+   		bool nearLibChanges = false;
+   		string newEntryBook;
+   		
+    	cout << "enter your position: " ; 
+   		cin >> userPose ; 
+ 	 	cout << "enter book name: ";
+   		cin >> newEntryBook;
+   		for (int i = 0 ; libraries.size() ; i++)
+   			{
+   				for (int j = 0 ; i < books.size() ; j++)
+    				{
+    					if (newEntryBook == books[j].getBookName()) 
+    						{
+    							int x = 1 ;
+    							abs(userPose - libraries[i].returnPosition()) = distance ;
+    							cout << x <<libraries[i].returnName() << distance << endl;	
+    						}
+					}
+			}
+	};
 
 int main()
 {
