@@ -49,77 +49,78 @@ class Publisher
 };
 
 class Book
-{	private:
-		int id;
-		string name ;
-		BookType type;
-		Publisher publisher ;
-		bool borrowed;
-	public:
-	Book(string name, Publisher publisher, BookType type)
-		{
-		this->name = name; 
-		this->id = bookId++;
-		this->publisher = publisher;
-		this->type = type;
-		}
-	void showInfo()
-	{
-		cout << id << ". " << name << endl;
-	}
-	BookType returnType()
-	{
-		return type;
-	}
-	void setBookName(string name )
-	{
-		this->name = name;
-	}
-	string getBookName()
-	{
-		return name;	
-	}
-	int returnBookId()
-	{
-		return id;
-	}
-	Publisher returnBookPublisher()
-	{
-		return publisher;
-	}
-	bool returnIsBorrowed()
-	{
-		return borrowed;
-	}
-};
+	{	
+		private:
+			int id;
+			string name;
+			BookType type;
+			Publisher publisher ;
+			bool borrowed;
+		public:
+			Book(string name, Publisher publisher, BookType type)
+				{
+					this->name = name; 
+					this->id = bookId++;
+					this->publisher = publisher;
+					this->type = type;
+				}
+			void showInfo()
+				{
+					cout << id << ". " << name << endl;
+				}
+			BookType returnType()
+				{
+					return type;
+				}
+			void setBookName(string name )
+				{
+					this->name = name;
+				}
+			string getBookName()
+				{
+					return name;	
+				}
+			int returnBookId()
+				{
+					return id;
+				}
+			Publisher returnBookPublisher()
+				{
+					return publisher;
+				}
+			bool returnIsBorrowed()
+				{
+					return borrowed;
+				}
+	};
 
 class Member
-{
-	private:
-		string id; //identification id
-		string name; 
-		vector<Book> borrowedBooks; 
+	{
+		private:
+			string id; //identification id
+			string name; 
+			vector<Book> borrowedBooks; 
 		
-	public:
-		Member(string id, string name)
-		{
-    		this->id = id;
-    		this->name =name;
-		}
-		string returnId()
-		{
-			return id;
-		}
-		vector<Book> &getBorrowedBook()
-		{
-			return this->borrowedBooks;
-		}
-		vector<Book> addToBorrowedBooks(Book book)
-		{
-			borrowedBooks.push_back(book);
-		}
+		public:
+			Member(string id, string name)
+				{
+    				this->id = id;
+    				this->name =name;
+				}
+			string returnId()
+				{
+					return id;
+				}
+			vector<Book> getBorrowedBook()
+				{
+					return borrowedBooks;
+				}
+			vector<Book> addToBorrowedBooks(Book book)
+				{
+					borrowedBooks.push_back(book);
+				}
 		
-};
+	};
 
 class Library
 {
@@ -195,6 +196,7 @@ class LibrariesHandler
 		vector<Book> books;
 		vector<Member> members;
 		vector<Library> libraries;
+		Book book(string name, Publisher publisher,BookType type);
 	public:
 	void createLibrary(string name, int position)
 	{
@@ -249,7 +251,7 @@ class LibrariesHandler
 	}
 	vector<Book> filterByType(int libId, BookType type)
 	{
-    	Book book(string name, Publisher publisher,type);
+    	Book book(string name, Publisher publisher,BookType type);
     	bool isThatType = false;
     	for (int i = 0 ; i < libraries.size() ; i++)
     	{
@@ -261,7 +263,7 @@ class LibrariesHandler
 	}
 	string filterByTypeAndShowInfo(int libId, BookType type)
 	{
-    	Book book(string name, Publisher publisher,  type);
+    	Book book(string name, Publisher publisher,BookType type);
     	bool isThatType = false;
     	for (int i = 0 ; i < libraries.size() ; i++)
     	{
@@ -287,25 +289,26 @@ class LibrariesHandler
 		for (int i = 0 ; i < members.size() ; i++ ){
 		
 		if (memberId == members[i].returnId());
-		}
+		
 		{
-			if (getBorrowedBooks.size() == 5) haveFiveBooks = true;
-			else if (getBorrowedBooks.size() < 5) haveFiveBooks = false;
+			if (getBorrowedBook.size() == 5) haveFiveBooks = true;
+			else if (getBorrowedBook.size() < 5) haveFiveBooks = false;
 			if (haveFiveBooks) throw "You have borrowed the maximum allowed number of books!";
 			else addToBorrowedBooks(books[i]);
 		}
+		}
 	}
-	bool returnBook(string memberId, int libraryId, string name)
+	void returnBook(string memberId, int libraryId, string name)
 	{
     	bool bookIsAvailable = false;
 
-		for (int i = 0 ; i < library.size() ; i++)
+		for (int i = 0 ; i < libraries.size() ; i++)
     	{
-    		if(name == books.name()) 
+    		if(name == books.getBookName()) 
 			{
 				bookIsAvailable = true;
 			}
-    		if (!bookIsAvailable) library.addBook(book);
+    		if (!bookIsAvailable) libraries[i].addBook(Book book);
 		}
 	}
 	void size()
@@ -320,19 +323,19 @@ class LibrariesHandler
     	cout << "enter your position: " ; 
     	cin >> position ; 
     	cout << "enter book name: ";
-    	cin >> name.book();
+    	cin >> book.name();
     	for (int i = 0 ; i < libraries.size() ; i++)
     	{
     		for (int j = 0 ; i < books.size() ; j++)
     		{
-    			if (name == getBookName() && abs(userPose - returnPosition()) < maxPose) 
+    			if (name == books[j].getBookName() && abs(userPose - libraries[i].returnPosition()) < maxPose) 
     			{
-    				abs(userPose - returnPosition()) = maxPose;
-    				nearestLib = returnName.library();
+    				abs(userPose - libraries[i].returnPosition()) = maxPose;
+    				nearestLib = libraries[i].returnName();
     				
     				
 				}
-				else if (name == getBookname() && abs(userPose - returnPosition()) =maxPose)
+				else if (name == books[j].getBookName() && abs(userPose - libraries[i].returnPosition()) == maxPose)
 				{
 					if (nearestLib)
 					{
