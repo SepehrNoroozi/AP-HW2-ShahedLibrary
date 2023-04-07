@@ -57,11 +57,13 @@ class Book
 			BookType type;
 			Publisher publisher ;
 			bool borrowed;
+			vector<Book> books;
 		public:
 			Book(string name, Publisher publisher, BookType type)
-				{
+				{	
+					bookId++;
 					this->name = name; 
-					this->id = bookId++;
+					bookId = this->id;
 					this->publisher = publisher;
 					this->type = type;
 				}
@@ -93,6 +95,10 @@ class Book
 				{
 					return borrowed;
 				}
+			void addBookToLib(Book book)
+				{
+					books.push_back(book);
+				}	
 	};
 
 class Member
@@ -133,7 +139,8 @@ class Library
 		public:
 			Library(string name, int position)
 				{
-					this->id = libraryId++;
+					libraryId++;
+					libraryId = this->id;
 				    this->name = name;
 				    this->position = position;
 				}
@@ -153,23 +160,34 @@ class Library
 					for (int i = 0 ; i < books.size() ; i++)
 						cout << "\n"<< books[i].getBookName() << endl;
 				}
+			void addBookToLib(Book book)
+				{
+					books.push_back(book);
+				}
 			void addBook(int id, string name, BookType type, Publisher publisher)
 				{
 					Book newBook(name, publisher,type);
 					books.push_back(newBook);
 				}
-			void returnBookByType()
+			vector<Book> booksByType(BookType type)
 				{
-					vector<Book> booksByType(BookType type )
+					vector<Book> books;
+					for(int i=0 ; i < (this->books).size() ; i++)
 						{
-							vector<Book> books;
-							for(int i=0 ; i<this->books ; i++)
+							if(this->books[i].returnType() == type)
 								{
-									if(this->books[i].showType()==type)
-										{
-											books.push_back(this->books[i]);
-										}		
-								}
+									books.push_back(this->books[i]);
+								}		
+						}
+				}
+			void returnBookByType(BookType type)
+				{
+					
+					for ( int i = 0 ; i < booksByType(type).size() ; i++)
+						{
+							int x = 1;
+							cout << x << (books[i].getBookName()) << (books[i].returnType()) << endl;
+							x++;
 						}
 				}
 			vector<Book> returnAllBooks()
@@ -184,10 +202,6 @@ class Library
 				{
 					return position;
 				}
-			void addBook(Book book)
-				{
-					books.push_back(book);
-				}
 			int returnLibID()
 				{
 					return id;
@@ -198,11 +212,11 @@ class Library
 class LibrariesHandler
 	{
 		private:
-			vector<Book> books;
 			vector<Member> members;
-			vector<Library> libraries;
 			Book book(string name, Publisher publisher,BookType type);
 		public:
+			vector<Book> books;
+			vector<Library> libraries;
 			void createLibrary(string name, int position)
 				{
 					Library library(name , position);
@@ -220,11 +234,11 @@ class LibrariesHandler
 			void addBook(int libId, string name, Publisher publisher, BookType type)
 				{
 			    	Book book(name , publisher , type);
-			    	libraries[libId].addBook(book);
+			    	libraries[libId].addBookToLib(book);
 				}
 			void addBook(int libId, Book book)
 				{
-			    	libraries[libId].addBook(book);
+			    	libraries[libId].addBookToLib(book);
 				}
 			void addMember(string name, string id)
 				{
@@ -300,33 +314,50 @@ class LibrariesHandler
 								}
 						}
 				}
-			void returnBook(string memberId, int libraryId, string name)
+			bool returnBook(string memberId, int libraryId, string name)
 				{
 			    	bool bookIsAvailable = false;
 
 					for (int i = 0 ; i < libraries.size() ; i++)
 				    	{
-				    		if(name == books[i].getBookName()) 
+				    		if(libraries[i].returnLibID()==libraryId)
+							{
+								for(int j = 0 ; j < books.size();j++)
 								{
-									bookIsAvailable = true;
+									if(name == books[j].getBookName()) 
+										{
+											bookIsAvailable = true;
+										}
+				    				if (!bookIsAvailable) 
+										{
+											books[j].addBookToLib(books[j]);	
+										}
 								}
-				    		if (!bookIsAvailable) 
-								{
-									libraries[i].addBook(Book book);	
-								}
+							}
 						}
 				}
 			void size()
 				{
 					cout << "The number of libraries available is: " <<  libraries.size() << endl ;
 				}
+//			vector<Library> returnLibraries(string name,int position)
+//				{
+//					return libraries(name, position);
+//				}
+//			vector<Book> returnBooks(string name, Publisher publisher, BookType type)
+//				{
+//					return books(name, publisher, type);
+//				}
+	};
 Library findNearestLibraryByPosition(string name, int position)
 	{
    		int userPose , maxPose = 100000;
-   		Library nearestLib;
+   		Library nearestLib(string name, int position);
    		bool nearLibChanges = false;
    		string newEntryBook;
-		       	
+		vector<Book> books;
+		vector<Library> libraries; 
+		      	
     	cout << "enter your position: " ; 
    		cin >> userPose ; 
  	 	cout << "enter book name: ";
@@ -336,29 +367,26 @@ Library findNearestLibraryByPosition(string name, int position)
     			for (int j = 0 ; i < books.size() ; j++)
     				{
     					if (newEntryBook == books[j].getBookName() && abs(userPose - libraries[i].returnPosition()) < maxPose) 
-    						{
-    							abs(userPose - libraries[i].returnPosition()) = maxPose;
-    							nearestLib = libraries[i];
+    						{ 
+    							maxPose = abs(userPose - libraries[i].returnPosition());
+    							nearestLib(name , position) = libraries[i];
     							nearLibChanges =true;
     						}
 						else if (newEntryBook == books[j].getBookName() && abs(userPose - libraries[i].returnPosition()) == maxPose)
 							{
-								if (libraries[i].returnLibID() < nearestLib.returnLibID())
+								if (libraries[i].returnLibID() < nearestLib(name , position).returnLibID())
 									{
-										return nearestLib;
+										return nearestLib(name , position);
 									}
 							}
 						else if (newEntryBook == books[j].getBookName() && abs(userPose - libraries[i].returnPosition()) == maxPose)
 							{
-								if (libraries[i].returnLibID() > nearestLib.returnLibID())
+								if (libraries[i].returnLibID() > nearestLib(name , position).returnLibID())
 									{
 										return libraries[i];
 									}
 							}
-						else 
-							{
-								return -1;
-							}
+						//here should be a return of -1 value
 					}
 			}
     	
@@ -367,14 +395,17 @@ string findLibrariesHaveBook(string name, int position)
 	{
     	//TODO
     	int userPose ,  distance;
-   		Library nearestLib;
+   		Library nearestLib(string name, int position);
    		bool nearLibChanges = false;
    		string newEntryBook;
+   		vector<Book> books;
+		vector<Library> libraries;
    		
     	cout << "enter your position: " ; 
    		cin >> userPose ; 
  	 	cout << "enter book name: ";
    		cin >> newEntryBook;
+   		
    		for (int i = 0 ; libraries.size() ; i++)
    			{
    				for (int j = 0 ; i < books.size() ; j++)
@@ -382,7 +413,7 @@ string findLibrariesHaveBook(string name, int position)
     					if (newEntryBook == books[j].getBookName()) 
     						{
     							int x = 1 ;
-    							abs(userPose - libraries[i].returnPosition()) = distance ;
+    							distance =  abs(userPose - libraries[i].returnPosition());
     							cout << x <<libraries[i].returnName() << distance << endl;	
     						}
 					}
